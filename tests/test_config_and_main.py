@@ -1,14 +1,12 @@
 """Testa caminhos, logging e a entrada real do pipeline."""
 
+import importlib
 import subprocess
 import sys
-from pathlib import Path
-<<<<<<< HEAD
-from unittest.mock import MagicMock
-=======
 import urllib.parse
+from pathlib import Path
+from unittest.mock import MagicMock
 
->>>>>>> origin/feature/wagner2
 import pytest
 
 from config import settings
@@ -137,11 +135,10 @@ def test_configure_logging_selects_file_by_category(
         handler.close()
 
 
-<<<<<<< HEAD
 @pytest.fixture
 def main_module(monkeypatch, tmp_path):
     monkeypatch.setenv("LOGS_DIR", str(tmp_path / "logs"))
-    return importlib.import_module("src.main")
+    return importlib.import_module("main")
 
 
 def test_exibir_menu_returns_trimmed_selection(main_module, monkeypatch):
@@ -357,7 +354,7 @@ def test_main_dispatches_rest_ingestion(main_module, monkeypatch):
 
     main_module.main()
 
-    assert calls == ["Get_dados.py"]
+    assert calls == ["src/bronze/Get_dados.py"]
 
 
 # projeto_final.pdf secoes 3.2/3.3 -> features.csv IDs 32-34, 38 e 39.
@@ -406,7 +403,7 @@ def test_main_dispatches_statistics_and_returns_to_menu(main_module, monkeypatch
 
     main_module.main()
 
-    assert calls == ["src/gold/analytics_statistics.py"]
+    assert calls == ["src/gold/analytics_stat.py"]
 
 
 @pytest.mark.parametrize("sucesso", [True, False])
@@ -421,12 +418,9 @@ def test_main_dispatches_zscore_and_returns_to_menu(main_module, monkeypatch, su
 
     main_module.main()
 
-    assert calls == [("src/gold/analytics_statistics.py", ["--analise", "zscore"])]
+    assert calls == [("src/gold/analytics_stat.py", ["--analise", "zscore"])]
 
 
-if __name__ == "__main__":
-    raise SystemExit(pytest.main([__file__, "-v"]))
-=======
 def test_pipeline_cli_help_runs_without_database_access():
     root = Path(__file__).resolve().parents[1]
     result = subprocess.run(
@@ -438,4 +432,7 @@ def test_pipeline_cli_help_runs_without_database_access():
 
     assert result.returncode == 0, result.stdout + result.stderr
     assert "--apenas-gold" in result.stdout
->>>>>>> origin/feature/wagner2
+
+
+if __name__ == "__main__":
+    raise SystemExit(pytest.main([__file__, "-v"]))

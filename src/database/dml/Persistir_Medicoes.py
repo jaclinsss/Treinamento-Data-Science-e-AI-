@@ -1,12 +1,8 @@
 """Persistencia atomica e mapeamento comum de eventos 3FN."""
 
 import logging
-<<<<<<< HEAD
 from collections.abc import Callable, Mapping
-=======
-from collections.abc import Mapping
 from time import monotonic
->>>>>>> origin/feature/wagner2
 
 import pandas as pd
 from sqlalchemy import inspect, text
@@ -169,13 +165,9 @@ def carregar_dataframe(
         _validar_legado_inativo(connection)
     logging.info("Validacao concluida: origem=%s; iniciando transacoes por leitura", origem)
     aprovados = []
-<<<<<<< HEAD
-    total = len(df)
     if progresso is not None:
         progresso(0, total)
-=======
     ultimo_progresso = monotonic()
->>>>>>> origin/feature/wagner2
     for indice, registro in enumerate(df.to_dict("records")):
         try:
             cabecalho, itens = preparar_evento(registro, origem)
@@ -206,10 +198,8 @@ def carregar_dataframe(
             logging.warning(
                 "Evento rejeitado: origem=%s indice=%s motivo=%s", origem, indice, error
             )
-<<<<<<< HEAD
         if progresso is not None:
             progresso(indice + 1, total)
-=======
         processados = indice + 1
         agora = monotonic()
         if processados == 1 or processados % 100 == 0 or processados == total or agora - ultimo_progresso >= 5:
@@ -225,5 +215,4 @@ def carregar_dataframe(
             ultimo_progresso = agora
     logging.info("Carga SQL concluida: origem=%s aceitos=%s rejeitados=%s tempo=%.1fs",
                  origem, len(aprovados), total - len(aprovados), monotonic() - inicio)
->>>>>>> origin/feature/wagner2
     return pd.DataFrame(aprovados)

@@ -157,7 +157,7 @@ def test_meteorological_loader_logs_stages(monkeypatch, caplog):
     dados = pd.DataFrame([meteo()])
     monkeypatch.setattr(meteorologica, "tabela_metereologica", lambda: dados)
     monkeypatch.setattr(meteorologica, "create_db_engine", MagicMock())
-    monkeypatch.setattr(meteorologica, "carregar_dataframe", lambda *args: dados)
+    monkeypatch.setattr(meteorologica, "carregar_dataframe", lambda *args, **kwargs: dados)
     silver = MagicMock()
     monkeypatch.setattr(meteorologica, "persistir_silver", silver)
 
@@ -330,18 +330,13 @@ def test_sql_failure_propagates_and_rolls_back_event(banco_teste):
             "ON p.id=i.id_parametro WHERE p.codigo='PH') "
             "BEGIN; THROW 51000, 'falha tecnica', 1; END; END"
         ))
-<<<<<<< HEAD
     chamadas = []
-    with pytest.raises(IntegrityError, match="falha tecnica"):
+    with pytest.raises(DBAPIError, match="falha tecnica"):
         carregar_dataframe(
             pd.DataFrame([water()]), "qualidade_agua", banco_teste,
             progresso=lambda atual, total: chamadas.append((atual, total)),
         )
     assert chamadas == [(0, 1)]
-=======
-    with pytest.raises(DBAPIError, match="falha tecnica"):
-        carregar_dataframe(pd.DataFrame([water()]), "qualidade_agua", banco_teste)
->>>>>>> origin/feature/wagner2
     assert counts(banco_teste) == (0, 0, 0, 0)
 
 

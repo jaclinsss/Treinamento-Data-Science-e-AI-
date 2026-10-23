@@ -63,27 +63,12 @@ semântico final do Power BI. A Gold publica `Dim_Estacao`, `Dim_Tempo`,
 ## Arquitetura do projeto
 
 ```text
-<<<<<<< HEAD:README.md
-meteorological-PyCoders/
-├── Get_dados.py                      # Entrada compatível da coleta Agritempo
-├── requirements.txt                 # Dependências, sem alteração de versões
-├── .env.example                     # Modelo sem segredos
-=======
 meteorological-pycorders/
 ├── .gitignore
-<<<<<<< HEAD
 ├── main.py
 ├── RUNBOOK.md
 ├── FLUXO_SOLUCAO.md
-=======
-├── requirements.txt
->>>>>>> origin/feature/wagner2:config/README.md
-├── README.md
-<<<<<<< HEAD
->>>>>>> origin/feature/jorge
-=======
->>>>>>> 8235c7555fad24b81de0675053fd98def82882ea
->>>>>>> origin/feature/jorge
+├── README
 ├── data_lakehouse/
 │   ├── bronze/                      # JSONs fonte, cadastros e lotes REST
 │   ├── silver/                      # Parquet Snappy, cadastros e auditoria
